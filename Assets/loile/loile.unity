@@ -942,22 +942,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 506061707}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28d810216d70ecb4eadcd0eed31594d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 936974b3f0efd8d4ca14d4a6b8a7bb6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 100
-  currentHP: 0
-  hpBarRenderer: {fileID: 0}
-  hpSprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  maxHealth: 100
   explosionPrefab: {fileID: 0}
-  hitSound: {fileID: 0}
-  destroySound: {fileID: 0}
 --- !u!1 &512349055
 GameObject:
   m_ObjectHideFlags: 0
@@ -3452,22 +3441,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2017523516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28d810216d70ecb4eadcd0eed31594d2, type: 3}
+  m_Script: {fileID: 11500000, guid: 936974b3f0efd8d4ca14d4a6b8a7bb6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 100
-  currentHP: 0
-  hpBarRenderer: {fileID: 0}
-  hpSprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  maxHealth: 100
   explosionPrefab: {fileID: 0}
-  hitSound: {fileID: 0}
-  destroySound: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
