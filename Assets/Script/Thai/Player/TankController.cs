@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿// [Vị trí: Assets/Scripts/Thai/TankController.cs]
+using UnityEngine;
 
 public class TankController : MonoBehaviour
 {
@@ -10,7 +11,10 @@ public class TankController : MonoBehaviour
     public Rigidbody2D rb;
     [Tooltip("Kéo tất cả các điểm nòng súng vào đây. Xe 2 nòng thì kéo 2 điểm.")]
     public Transform[] firePoints;
+
+    [HideInInspector] // Ẩn khỏi Inspector vì TrinhSinhXe sẽ tự động nạp đạn vào đây!
     public GameObject bulletPrefab;
+
     public float bulletSpeed = 15f;
     public float fireRate = 0.5f;
 
@@ -67,6 +71,7 @@ public class TankController : MonoBehaviour
         // Lặp qua tất cả các nòng súng để bắn
         foreach (Transform fp in firePoints)
         {
+            // Kiểm tra xem hệ thống đã nạp đạn vào cho xe chưa
             if (fp != null && bulletPrefab != null)
             {
                 GameObject bulletObj = Instantiate(bulletPrefab, fp.position, fp.rotation);
