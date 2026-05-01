@@ -1,36 +1,49 @@
-﻿using UnityEngine;
+﻿// [Vị trí: Assets/Scripts/Thai/Bullet.cs]
+using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float damage = 20f;
-    private GameObject owner;
-    private bool isReadyToHitOwner = false;
+    [Header("--- Chỉ số Đạn ---")]
+    public int damage = 20; // Sức công phá của viên đạn này
 
-    public void Setup(GameObject shooter, float speed)
+    private float speed;
+    private GameObject shooter; // Lưu lại người bắn để đạn không tự nổ vào mặt mình
+    private Rigidbody2D rb;
+
+    void Awake()
     {
-        owner = shooter;
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        Rigidbody2D shooterRb = shooter.GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
+    }
 
-        // Cộng vận tốc xe vào đạn để đạn luôn nhanh hơn xe
-        Vector2 extraVelocity = (shooterRb != null) ? shooterRb.linearVelocity : Vector2.zero;
-        rb.linearVelocity = (Vector2)transform.up * speed + extraVelocity;
+    // Hàm này được TankController gọi ngay lúc viên đạn đẻ ra
+    public void Setup(GameObject owner, float bulletSpeed)
+    {
+        shooter = owner;
+        speed = bulletSpeed;
 
-        Invoke("EnableSelfDamage", 0.1f); // 0.1s bảo hiểm
+        // Tạo lực đẩy viên đạn bay thẳng theo hướng nòng súng
+        rb.linearVelocity = transform.up * speed;
+
+        // Dọn rác: Tự hủy sau 3 giây nếu đạn bay ra ngoài map không trúng gì cả
         Destroy(gameObject, 3f);
     }
 
-    void EnableSelfDamage() => isReadyToHitOwner = true;
-
-    private void OnTriggerEnter2D(Collider2D other)
+    // Xử lý khi viên đạn đập vào một vật thể khác (yêu cầu Collider để Is Trigger)
+    void OnTriggerEnter2D(Collider2D hitInfo)
     {
-        if (other.gameObject == owner && !isReadyToHitOwner) return;
+        // 1. Nếu đạn chạm ngay vào người vừa bắn ra nó -> Bỏ qua
+        if (hitInfo.gameObject == shooter) return;
 
-        IDamageable hitObj = other.GetComponent<IDamageable>();
-        if (hitObj != null)
+        // 2. Kiểm tra xem nạn nhân có gắn script TankHealth không?
+        TankHealth tankHealth = hitInfo.GetComponent<TankHealth>();
+
+        if (tankHealth != null)
         {
-            hitObj.TakeDamage(damage);
-            Destroy(gameObject);
+            // Trừ máu nạn nhân
+            tankHealth.TakeDamage(damage);
         }
+
+        // 3. Đạn nổ: Sau khi đập trúng xe hoặc trúng tường thì đạn tự hủy
+        Destroy(gameObject);
     }
 }
